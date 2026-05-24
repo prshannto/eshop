@@ -15,6 +15,7 @@ const ProductItem = ({
   currentPrice,
 }: ProductTypeList) => {
   const dispatch = useDispatch();
+
   const { favProducts } = useSelector((state: RootState) => state.user);
 
   const isFavourite = some(favProducts, (productId) => productId === id);
@@ -33,20 +34,25 @@ const ProductItem = ({
         <button
           type="button"
           onClick={toggleFav}
-          className={`btn-heart ₹{isFavourite ? "btn-heart--active" : ""}`}
+          className={`btn-heart ${isFavourite ? "btn-heart--active" : ""}`}
         >
           <i className="icon-heart" />
         </button>
 
-        <Link href={`/product/₹{id}`}>
-          <img src={images ? images[0] : ""} alt="product" />
+        <Link href={`/product/${id}`}>
+          <img src={images && images.length > 0 ? images[0] : ""} alt={name} />
+
           {discount && <span className="product__discount">{discount}%</span>}
         </Link>
       </div>
+
       <div className="product__description">
         <h3>{name}</h3>
+
         <div
-          className={`product__price ₹{discount ? "product__price--discount" : ""}`}
+          className={`product__price ${
+            discount ? "product__price--discount" : ""
+          }`}
         >
           <h4>₹{currentPrice}</h4>
 
